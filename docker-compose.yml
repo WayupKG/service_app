@@ -24,3 +24,35 @@ services:
             - POSTGRES_DB=dbname
             - POSTGRES_USER=dbuser
             - POSTGRES_PASSWORD=dbuserpassword
+
+    redis:
+        image: redis:7.0-alpine
+        hostname: redis
+
+    worker:
+        build:
+            context: .
+        hostname: worker
+        entrypoint: celery
+        command: -A service worker --loglevel=INFO
+        volumes:
+            - ./service:/service
+        links:
+            - redis
+        depends_on:
+            - redis
+
+    flower:
+        build:
+            context: .
+        hostname: flower
+        ports:
+            - "5555:5555"
+        entrypoint: celery
+        command: -A service flower
+        volumes:
+            - ./service:/service
+        links:
+            - redis
+        depends_on:
+            - redis
