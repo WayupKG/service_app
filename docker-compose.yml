@@ -37,10 +37,16 @@ services:
         command: -A service worker --loglevel=INFO
         volumes:
             - ./service:/service
+        environment:
+            - DB_HOST=database
+            - DB_NAME=dbname
+            - DB_USER=dbuser
+            - DB_PASSWORD=dbuserpassword
         links:
             - redis
         depends_on:
             - redis
+            - database
 
     flower:
         build:
