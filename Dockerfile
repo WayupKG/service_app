@@ -8,5 +8,4 @@ WORKDIR /service
 EXPOSE 8000
 
 RUN pip install -r /temp/req.txt
-RUN adduser --disabled-password service-user
-USER service-user
+USER root
