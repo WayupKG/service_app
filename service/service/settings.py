@@ -148,3 +148,13 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Bishkek'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': "redis://" + REDIS_HOST + ":" + REDIS_PORT + '/1',
+    }
+}
+
+PRICE_CACHE_NAME = 'price_cache'

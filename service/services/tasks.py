@@ -1,9 +1,14 @@
-from celery import shared_task
-from celery_singleton import Singleton
-from django.db import transaction
-from django.db.models import F
+from django.conf import settings
 
 from service.celery import app
+from celery import shared_task
+
+from celery_singleton import Singleton
+
+from django.db import transaction
+from django.db.models import F
+from django.core.cache import cache
+
 
 """
 select_for_update() - блокирует эту таблицу что бы пока он не закончил действие другие не могли изменить данные
@@ -20,4 +25,4 @@ def set_price(subscription_id):
         ).first()
         subscription.price = subscription.annotate_price
         subscription.save()
-
+    cache.delete(settings.PRICE_CACHE_NAME)
