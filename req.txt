@@ -1,6 +1,7 @@
 django==3.2.16
 djangorestframework==3.14.0
 django-redis==5.2.0
+django-cachalot==2.5.2
 psycopg2-binary==2.9.5
 celery[redis]==5.2.7
 celery_singleton==0.3.1
